@@ -13,15 +13,12 @@ library(ggplot2)
 activity <- data.table::fread(input = "activity.csv")
 
 ```
-
-
 ## What is mean total number of steps taken per day?
 
 ```{r}
 Total_Steps <- activity[, c(lapply(.SD, sum, na.rm = FALSE)), .SDcols = c("steps"), by = .(date)] 
 head(Total_Steps, 10)
 ```
-
 A histogram of the total number of steps taken each day. 
 
 ```{r}
@@ -50,7 +47,6 @@ Which 5-minute interval, on average across all the days in the dataset, contains
 ```{r}
 IntervalDT[steps == max(steps), .(max_interval = interval)]
 ```
-
 
 ## Imputing missing values
 
@@ -91,10 +87,9 @@ Second Part (fillin in na with median) | 9354.23 | 10395
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-A new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
+A new factor variable in the dataset with two levels – “weekday” and “weekend”.
 
 ```{r}
-# Just recreating activity from scratch then making the new factor variable. (No need to, just want to be clear on what the entire process is.) 
 activity <- data.table::fread(input = "activity.csv")
 activity[, date := as.POSIXct(date, format = "%Y-%m-%d")]
 activity[, `Day of Week`:= weekdays(x = date)]
